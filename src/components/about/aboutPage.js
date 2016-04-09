@@ -3,6 +3,15 @@
 var React=require('react');
 
 var About=React.createClass({
+    statics:{
+        willTransitionTo:function (transition,params,query,callback) {
+            console.log('Welcome to about page!');
+            callback();
+        },
+        willTransitionFrom:function (transition,component) {
+            console.log('You leave about page!');
+        }
+    },
     render:function () {
         return (
             <div>

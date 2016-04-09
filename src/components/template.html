@@ -1,11 +1,20 @@
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <a href="/" class="navbar-brand">
-            <img src="images/logo.jpg" alt="">
-        </a>
-        <ul class="nav navbar-nav">
-            <li><a href="/">Home</a></li>
-            <li><a href="/#about">About</a></li>
-        </ul>
-    </div>
-</nav>
+<form>
+    <h1>Manage Author</h1>
+    <label htmlFor="firstName">First Name</label>
+    <input type="text"
+          name="firstName"
+          className="form-control"
+          placeholder="First Name"
+          ref="firstName"
+          value=""/>
+     <br/>
+     <label htmlFor="lastName">Last Name</label>
+     <input type="text"
+          name="lastName"
+          className="form-control"
+          placeholder="Last Name"
+          ref="lastName"
+          value=""/>
+      <br/>
+      <input type="submit" value="Save" className="btn btn-default"/>
+</form>

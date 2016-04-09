@@ -12,6 +12,8 @@ React sample project with react+gulp+browserify
 + cmd:npm install --save gulp-eslint@0.15.0
 + cmd:npm install --save react@0.13.3 react-router@0.13.3 flux@2.0.3
 + cmd:npm install --save lodash
++ cmd:npm install --save toastr@2.1.0
++ cmd:npm install --save object-assign
 start app:
 + cmd:gulp
 
