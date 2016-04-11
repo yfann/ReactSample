@@ -19,9 +19,11 @@ var Authors = React.createClass({
     //     }
     // } ,
     componentWillMount:function () {//update UI
+        console.log('Author page will mount');
         AuthorStore.addChangeListener(this._onChange);
     },
     componentWillUnmount:function(){//update UI
+        console.log('Author page will unmount');
         AuthorStore.removeChangeListener(this._onChange);
     },
     _onChange:function () {

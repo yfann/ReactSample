@@ -7,6 +7,7 @@ var InitializeActions=require('./actions/initializeActions');
 
 InitializeActions.initApp();
 
+//Router.HistoryLocation is optional
 Router.run(routes,Router.HistoryLocation,function(Handler){
     React.render(<Handler/>,document.getElementById('app'));
 });
