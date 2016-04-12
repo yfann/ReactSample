@@ -14,6 +14,10 @@ React sample project with react+gulp+browserify
 + cmd:npm install --save lodash
 + cmd:npm install --save toastr@2.1.0
 + cmd:npm install --save object-assign   
++ cmd:npm install --save less
++ cmd:npm install --save gulp-less
++ cmd:npm install --save sass
++ cmd:npm install --save gulp-sass   //gulp-ruby-sass is not easy to use
 
 start app:  
 + cmd:gulp

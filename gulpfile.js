@@ -8,6 +8,8 @@ var reactify=require('reactify');//Transforms React JSX ot JS
 var source=require('vinyl-source-stream');//Use conventional text streams with gulp
 var concat=require('gulp-concat');//Concatenates files
 var lint=require('gulp-eslint');
+var less=require('gulp-less');
+var sass=require('gulp-sass');
 
 var config={
     port:9005,
@@ -19,6 +21,8 @@ var config={
         css:['node_modules/bootstrap/dist/css/bootstrap.min.css',
         'node_modules/bootstrap/dist/css/bootstrap-theme.min.css',
         'node_modules/toastr/toastr.css'],
+        less:'./src/css/less/*.less',
+        sass:'./src/css/sass/*.scss',
         dist:'./dist',
         mainJs:'./src/main.js'
     }
@@ -55,6 +59,20 @@ gulp.task('css',function () {
     .pipe(gulp.dest(config.paths.dist+'/css'));
 })
 
+gulp.task('less',function () {
+    gulp.src(config.paths.less)
+        .pipe(less())
+        .pipe(concat('bundle-less.css'))
+        .pipe(gulp.dest(config.paths.dist+'/css'));
+});
+
+gulp.task('sass',function () {
+    gulp.src(config.paths.sass)
+        .pipe(sass().on('error',sass.logError))
+        .pipe(concat('bundle-sass.css'))
+        .pipe(gulp.dest(config.paths.dist+'/css'))
+});
+
 gulp.task('images',function () {
     gulp.src(config.paths.images)
         .pipe(gulp.dest(config.paths.dist+'/images'))
@@ -70,7 +88,9 @@ gulp.task('lint',function () {
 gulp.task('watch',function () {
     gulp.watch(config.paths.html,['html']);
     gulp.watch(config.paths.js,['js','lint']);
+    //gulp.watch(config.paths.less,['less']);
+    gulp.watch(config.paths.sass,['sass']);
 });
 
-gulp.task('default',['html','js','css','images','lint','open','watch']);
+gulp.task('default',['html','js','css','sass','images','open','watch']);//less,lint
 
