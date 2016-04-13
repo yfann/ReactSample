@@ -20,6 +20,7 @@
     "gulp-open": "^1.0.0",
     "gulp-ruby-sass": "^2.0.6",
     "gulp-sass": "^2.2.0",
+    "gulp-sourcemaps": "^1.6.0",
     "jquery": "^2.1.4",
     "less": "^2.6.1",
     "lodash": "^4.8.2",

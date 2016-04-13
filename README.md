@@ -18,6 +18,7 @@ React sample project with react+gulp+browserify
 + cmd:npm install --save gulp-less
 + cmd:npm install --save sass
 + cmd:npm install --save gulp-sass   //gulp-ruby-sass is not easy to use
++ cmd:npm install --save gulp-sourcemaps
 
 start app:  
 + cmd:gulp

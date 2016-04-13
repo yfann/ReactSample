@@ -10,6 +10,7 @@ var concat=require('gulp-concat');//Concatenates files
 var lint=require('gulp-eslint');
 var less=require('gulp-less');
 var sass=require('gulp-sass');
+var sourcemaps=require('gulp-sourcemaps');
 
 var config={
     port:9005,
@@ -46,17 +47,21 @@ gulp.task('html',function () {
 });
 
 gulp.task('js',function () {
-    browserify(config.paths.mainJs).transform(reactify).bundle()
-    .on('error',console.error.bind(console))
-    .pipe(source('bundle.js'))
-    .pipe(gulp.dest(config.paths.dist+'/scripts'))
-    .pipe(connect.reload());
+    browserify(config.paths.mainJs)
+            .transform(reactify)
+            .bundle()
+            .on('error',console.error.bind(console))
+            .pipe(source('bundle.js'))
+            .pipe(gulp.dest(config.paths.dist+'/scripts'))
+            .pipe(connect.reload());
 })
 
 gulp.task('css',function () {
     gulp.src(config.paths.css)
-    .pipe(concat('bundle.css'))
-    .pipe(gulp.dest(config.paths.dist+'/css'));
+        .pipe(sourcemaps.init())
+        .pipe(concat('bundle.css'))
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest(config.paths.dist+'/css'));
 })
 
 gulp.task('less',function () {
@@ -68,8 +73,10 @@ gulp.task('less',function () {
 
 gulp.task('sass',function () {
     gulp.src(config.paths.sass)
+        .pipe(sourcemaps.init())
         .pipe(sass().on('error',sass.logError))
         .pipe(concat('bundle-sass.css'))
+        .pipe(sourcemaps.write())
         .pipe(gulp.dest(config.paths.dist+'/css'))
 });
 
