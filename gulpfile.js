@@ -52,8 +52,8 @@ gulp.task('js',function () {
             .bundle()
             .on('error',console.error.bind(console))
             .pipe(source('bundle.js'))
-            .pipe(gulp.dest(config.paths.dist+'/scripts'))
-            .pipe(connect.reload());
+            .pipe(gulp.dest(config.paths.dist+'/scripts'));
+            // .pipe(connect.reload());
 })
 
 gulp.task('css',function () {

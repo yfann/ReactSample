@@ -1,6 +1,6 @@
 #React Project
 
-React sample project with react+gulp+browserify
+React sample project with react+gulp+npm
 
 ##SetUp
 
@@ -21,7 +21,8 @@ React sample project with react+gulp+browserify
 + cmd:npm install --save gulp-sourcemaps
 
 start app:  
-+ cmd:gulp
+
++ cmd:`gulp`
 
 
 
