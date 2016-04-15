@@ -7,27 +7,22 @@ var browserify=require('browserify');//bundles js
 var reactify=require('reactify');//Transforms React JSX ot JS
 var source=require('vinyl-source-stream');//Use conventional text streams with gulp
 var concat=require('gulp-concat');//Concatenates files
-var lint=require('gulp-eslint');
 var less=require('gulp-less');
 var sass=require('gulp-sass');
 var sourcemaps=require('gulp-sourcemaps');
 
-var config={
-    port:9005,
-    devBaseUrl:'http:localhost',
-    paths:{
-        html:'./src/*.html',
-        js:'./src/**/*.js',
-        images:'./src/images/*',
-        css:['node_modules/bootstrap/dist/css/bootstrap.min.css',
-        'node_modules/bootstrap/dist/css/bootstrap-theme.min.css',
-        'node_modules/toastr/toastr.css'],
-        less:'./src/css/less/*.less',
-        sass:'./src/css/sass/*.scss',
-        dist:'./dist',
-        mainJs:'./src/main.js'
-    }
-}
+var lint=require('gulp-eslint');
+var jshint=require('gulp-jshint');
+var jscs=require('gulp-jscs');
+
+var util=require('gulp-util');
+var gulpprint=require('gulp-print');
+var gulpif=require('gulp-if');
+var args=require('yargs').argv;
+
+var config=require('./gulpfile.config')();
+
+log('gulp started');
 
 gulp.task('connect',function () {
     connect.server({
@@ -50,8 +45,11 @@ gulp.task('js',function () {
     browserify(config.paths.mainJs)
             .transform(reactify)
             .bundle()
-            .on('error',console.error.bind(console))
+            // .pipe(buffer())
+            // .on('error',console.error.bind(console))
             .pipe(source('bundle.js'))
+            // .pipe(sourcemaps.init())
+            // .pipe(sourcemaps.write())
             .pipe(gulp.dest(config.paths.dist+'/scripts'));
             // .pipe(connect.reload());
 })
@@ -92,12 +90,36 @@ gulp.task('lint',function () {
     .pipe(lint.format());
 })
 
+
+gulp.task('vet',function () {
+    log('Analyzing source with JSHint and JSCS');
+    
+    return gulp.src(config.paths.js)
+        .pipe(gulpif(args.verbose,gulpprint())) //gulp --verbose
+        // .pipe(jscs()) //has error
+        .pipe(jshint())
+        .pipe(jshint.reporter('jshint-stylish',{verbose:true}))
+        .pipe(jshint.reporter('fail'));
+})
+
 gulp.task('watch',function () {
     gulp.watch(config.paths.html,['html']);
     gulp.watch(config.paths.js,['js','lint']);
     //gulp.watch(config.paths.less,['less']);
     gulp.watch(config.paths.sass,['sass']);
 });
+
+function log(msg) {
+    if(typeof(msg)==='object'){
+        for(var item in msg){
+            if(msg.hasOwnProperty(item)){
+                util.log(util.color.yellow(msg[item]));
+            }
+        }
+    }else{
+        util.log(util.colors.yellow(msg));
+    }
+}
 
 gulp.task('default',['html','js','css','sass','images','open','watch']);//less,lint
 
