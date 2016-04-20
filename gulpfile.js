@@ -10,7 +10,7 @@ var concat=require('gulp-concat');//Concatenates files
 var less=require('gulp-less');
 var sass=require('gulp-sass');
 var sourcemaps=require('gulp-sourcemaps');
-
+var buffer=require('vinyl-buffer');
 var lint=require('gulp-eslint');
 var jshint=require('gulp-jshint');
 var jscs=require('gulp-jscs');
@@ -45,13 +45,13 @@ gulp.task('js',function () {
     browserify(config.paths.mainJs)
             .transform(reactify)
             .bundle()
-            // .pipe(buffer())
-            // .on('error',console.error.bind(console))
+            .on('error',console.error.bind(console))
             .pipe(source('bundle.js'))
-            // .pipe(sourcemaps.init())
-            // .pipe(sourcemaps.write())
-            .pipe(gulp.dest(config.paths.dist+'/scripts'));
-            // .pipe(connect.reload());
+            .pipe(buffer())
+            .pipe(sourcemaps.init({loadMaps: true}))
+            .pipe(sourcemaps.write())
+            .pipe(gulp.dest(config.paths.dist+'/scripts'))
+            .pipe(connect.reload());
 })
 
 gulp.task('css',function () {
