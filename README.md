@@ -1,6 +1,6 @@
 #React Project
 
-React sample project with react+gulp+npm
+React sample project with Flux.
 
 ##SetUp
 
