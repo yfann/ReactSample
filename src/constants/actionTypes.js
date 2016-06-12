@@ -1,9 +1,6 @@
 "use strict";
-var keyMirror=require('react/lib/keyMirror');
 
-module.exports=keyMirror({
-    INITIALIZE:null,
-    CREATE_AUTHOR:null,
-    UPDATE_AUTHOR:null,
-    DELETE_AUTHOR:null
-});
+export const INITIALIZE='INITIALIZE'
+export const CREATE_AUTHOR='CREATE_AUTHOR'
+export const UPDATE_AUTHOR='UPDATE_AUTHOR'
+export const DELETE_AUTHOR='DELETE_AUTHOR'

@@ -1,18 +1,17 @@
 "user strict";
 
-var Dispatcher=require('../dispatcher/appDispatcher');
-var AuthorApi=require('../api/authorApi');
-var ActionTypes=require('../constants/actionTypes');
+import api from '../api/authorApi'
+import * as types from '../constants/ActionTypes'
 
-var InitializeActions={
-    initApp:function () {
-        Dispatcher.dispatch({
-            actionType:ActionTypes.INITIALIZE,
-            initialData:{
-                authors:AuthorApi.getAllAuthors()
-            }
-        });
+function _initApp(){
+    return {
+        type:types.INITIALIZE,
+        initialData:api.getAllAuthors()
     }
-};
+}
 
-module.exports=InitializeActions;
+export function initApp() {
+    return dispatch=>{
+        dispatch(_initApp());
+    }
+}
