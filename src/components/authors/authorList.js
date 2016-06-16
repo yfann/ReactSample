@@ -1,17 +1,17 @@
 "use strict";
 
 var React = require('react');
-var Link=require('react-router').Link;
-var toastr=require('toastr');
-var AuthorActions=require('../../actions/authorActions');
+var Link = require('react-router').Link;
+var toastr = require('toastr');
 
 var AuthorList = React.createClass({
     propTypes:{
-        authors:React.PropTypes.array.isRequired
+        authors:React.PropTypes.array.isRequired,
+        deleteAuthor:React.PropTypes.func.isRequired
     },
     deleteAuthor:function (id,event) {
         event.preventDefault();
-        AuthorActions.deleteAuthor(id);
+        this.props.deleteAuthor(id);
         toastr.success('Author Deleted');
     },
     
@@ -43,4 +43,4 @@ var AuthorList = React.createClass({
     }
 });
 
-module.exports = AuthorList;
+module.exports=AuthorList;

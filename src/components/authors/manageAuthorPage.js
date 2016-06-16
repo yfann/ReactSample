@@ -3,9 +3,11 @@
 var React=require("react");
 var Router=require('react-router');
 var AuthorForm=require('./authorForm');
-var AuthorActions=require('../../actions/authorActions');
-var AuthorStore=require('../../stores/authorStore');
 var toastr=require('toastr');
+import {updateAuthor,createAuthor} from ('../../actions/authorActions');
+import {connect} from 'react-redux'
+
+
 var ManageAuthorPage=React.createClass({
     mixins:[
         Router.Navigation
@@ -56,10 +58,10 @@ var ManageAuthorPage=React.createClass({
         if(!this.authorFormIsValid()){
             return;
         }
-        if(this.state.author.id){
-            AuthorActions.updateAuthor(this.state.author);
+        if(this.props.author.id){
+            this.props.updateAuthor(this.state.author);
         }else{
-            AuthorActions.createAuthor(this.state.author);
+            this.props.createAuthor(this.state.author);
         }
 
         this.setState({dirty:false});
@@ -68,12 +70,27 @@ var ManageAuthorPage=React.createClass({
     },
     render:function () {
         return (
-            <AuthorForm author={this.state.author}
+            <AuthorForm author={this.props.author}
                         onChange={this.setAuthorState}
                         onSave={this.saveAuthor}
                         errors={this.state.errors}/>
         );
+    },
+    propTypes:{
+        authors:React.PropTypes.array.isRequired,
+        updateAuthor:React.PropTypes.func.isRequired,
+        createAuthor:React.PropTypes.func.isRequired
     }
 });
 
-module.exports=ManageAuthorPage;
+
+const mapStateToProps=(state)=>{
+    return {
+        authors:state
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    {updateAuthor,createAuthor}
+)(ManageAuthorPage)

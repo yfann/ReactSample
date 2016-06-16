@@ -45,8 +45,8 @@ export function deleteAuthor(id){
 
 function _getAllAuthors(){
     return {
-        type:types.INITIALIZE,
-        initialData:api.getAllAuthors()
+        type:types.GET_AUTHORS,
+        authors:api.getAllAuthors()
     }
 }
 

@@ -1,43 +1,36 @@
 "use strict";
 
 var React = require('react');
-var AuthorActions=require('../../actions/authorActions');
 var AuthorStore=require('../../stores/authorStore');
 var AuthorList = require('./authorList');
 var Router=require('react-router');
 var Link=Router.Link;
+import {deleteAuthor} from ('../../actions/authorActions');
+import {connect} from 'react-redux'
 
 var Authors = React.createClass({
-    getInitialState:function () {
-        return {authors:AuthorStore.getAllAuthors()};
-        //return {authors:[]};
-    } ,
-    // componentDidMount:function () {
-    //     if(this.isMounted())
-    //     {
-    //        this.setState({authors:AuthorApi.getAllAuthors()});
-    //     }
-    // } ,
-    componentWillMount:function () {//update UI
-        console.log('Author page will mount');
-        AuthorStore.addChangeListener(this._onChange);
-    },
-    componentWillUnmount:function(){//update UI
-        console.log('Author page will unmount');
-        AuthorStore.removeChangeListener(this._onChange);
-    },
-    _onChange:function () {
-        this.setState({authors:AuthorStore.getAllAuthors()});
+    propTypes:{
+        authors:React.PropTypes.array.isRequired,
+        deleteAuthor:React.PropTypes.func.isRequired
     },
     render:function () {
         return (
             <div>
                 <h1>Authors</h1>
                 <Link to="addAuthor" className="btn btn-default">Add Author</Link>
-                <AuthorList authors = {this.state.authors}/>
+                <AuthorList authors = {this.props.authors} deleteAuthor={()=>this.props.deleteAuthor()}/>
             </div>
         );
     }
 });
 
-module.exports = Authors;
+const mapStateToProps=(state)=>{
+    return {
+        authors:state
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    {deleteAuthor}
+)(Authors)
