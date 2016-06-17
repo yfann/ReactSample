@@ -5,7 +5,7 @@ var AuthorStore=require('../../stores/authorStore');
 var AuthorList = require('./authorList');
 var Router=require('react-router');
 var Link=Router.Link;
-import {deleteAuthor} from ('../../actions/authorActions');
+import {deleteAuthor} from '../../actions/authorActions';
 import {connect} from 'react-redux'
 
 var Authors = React.createClass({

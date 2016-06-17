@@ -4,7 +4,7 @@ var React=require("react");
 var Router=require('react-router');
 var AuthorForm=require('./authorForm');
 var toastr=require('toastr');
-import {updateAuthor,createAuthor} from ('../../actions/authorActions');
+import {updateAuthor,createAuthor} from '../../actions/authorActions';
 import {connect} from 'react-redux'
 
 
