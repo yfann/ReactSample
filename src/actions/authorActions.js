@@ -1,57 +1,33 @@
 "user strict";
 
-import api from '../api/authorApi'
-import * as types from '../constants/ActionTypes'
+var Dispatcher=require('../dispatcher/appDispatcher');
+var AuthorApi=require('../api/authorApi');
+var ActionTypes=require('../constants/actionTypes');
 
-function _createAuthor(author) {
-    return {
-        type:types.CREATE_AUTHOR,
-        author:api.saveAuthor(author)
+var AuthorActions={
+    createAuthor:function (author) {
+        var newAuthor=AuthorApi.saveAuthor(author);
+        
+        Dispatcher.dispatch({
+            actionType:ActionTypes.CREATE_AUTHOR,
+            author:newAuthor
+        });
+    },
+    updateAuthor:function (author) {
+        var updatedAuthor=AuthorApi.saveAuthor(author);
+        
+        Dispatcher.dispatch({
+            actionType:ActionTypes.UPDATE_AUTHOR,
+            author:updatedAuthor
+        });
+    },
+    deleteAuthor:function (id) {
+        AuthorApi.deleteAuthor(id);
+        Dispatcher.dispatch({
+            actionType:ActionTypes.DELETE_AUTHOR,
+            id:id
+        });
     }
-}
+};
 
-export function createAuthor(author) {
-    return dispatch=>{
-        dispatch(_createAuthor(author));
-    }
-}
-
-
-function _updateAuthor(author) {
-    return {
-        type:types.UPDATE_AUTHOR,
-        author:api.saveAuthor(author)
-    }
-}
-
-export function updateAuthor(author) {
-    return dispatch=>{
-        dispatch(_updateAuthor(author));
-    }
-}
-
-function _deleteAuthor(id) {
-    return {
-        type:types.DELETE_AUTHOR,
-        id:id
-    }
-}
-
-export function deleteAuthor(id){
-    return dispatch=>{
-        dispatch(_deleteAuthor(id));
-    }
-}
-
-function _getAllAuthors(){
-    return {
-        type:types.GET_AUTHORS,
-        authors:api.getAllAuthors()
-    }
-}
-
-export function getAllAuthors() {
-    return dispatch=>{
-        dispatch(_getAllAuthors());
-    }
-}
+module.exports=AuthorActions;

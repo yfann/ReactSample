@@ -4,7 +4,7 @@ var gulp=require('gulp');
 var connect=require('gulp-connect'); //runs a local dev server
 var open=require('gulp-open');//open a URL in a web browser
 var browserify=require('browserify');//bundles js
-var babelify=require('babelify');
+var reactify=require('reactify');//Transforms React JSX ot JS
 var source=require('vinyl-source-stream');//Use conventional text streams with gulp
 var concat=require('gulp-concat');//Concatenates files
 var less=require('gulp-less');
@@ -43,7 +43,7 @@ gulp.task('html',function () {
 
 gulp.task('js',function () {
     browserify(config.paths.mainJs)
-            .transform("babelify",{presets:["es2015","react"]})
+            .transform(reactify)
             .bundle()
             .on('error',console.error.bind(console))
             .pipe(source('bundle.js'))
